@@ -62,6 +62,9 @@
                                                             <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="30"/>
                                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="onDeleteClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jC8-k0-2Be"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="foh-bR-poR">
                                                         <rect key="frame" x="191" y="0.0" width="85.5" height="85.5"/>
@@ -312,7 +315,7 @@
                                                             <constraint firstAttribute="width" secondItem="nCq-lx-dkF" secondAttribute="height" multiplier="1:1" id="ROI-V4-x0h"/>
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="tinted" title="." cornerStyle="capsule" buttonSize="large">
+                                                        <buttonConfiguration key="configuration" style="tinted" title="," cornerStyle="capsule" buttonSize="large">
                                                             <backgroundConfiguration key="background">
                                                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </backgroundConfiguration>
@@ -320,6 +323,9 @@
                                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <color key="baseBackgroundColor" systemColor="systemGray2Color"/>
                                                         </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="onCommaClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ewO-9E-Xp6"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iLo-xj-VC9">
                                                         <rect key="frame" x="95.5" y="0.0" width="85.5" height="85.5"/>

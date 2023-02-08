@@ -357,6 +357,9 @@
                                                             <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="30"/>
                                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="onSignClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="j2u-w0-Tlr"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dH2-6P-1dl">
                                                         <rect key="frame" x="286.5" y="0.0" width="85.5" height="85.5"/>

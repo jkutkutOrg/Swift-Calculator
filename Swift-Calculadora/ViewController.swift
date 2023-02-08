@@ -33,6 +33,17 @@ class ViewController: UIViewController {
         updateUI();
     }
     
+    @IBAction func onSignClicked(_ sender: UIButton) {
+        let actualSign = String(actualNbr.prefix(1));
+        if actualSign == "-" {
+            actualNbr.removeFirst(1)
+        }
+        else {
+            actualNbr = "-" + actualNbr
+        }
+        updateUI()
+    }
+    
     func append(_ c: String) {
         // Appends to the right the given character
         if actualNbr.count >= MAX_NBR_SIZE {
@@ -56,7 +67,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onDeleteClicked(_ sender: UIButton) {
-        if actualNbr.count == 1 {
+        if actualNbr.count == 1 || (actualNbr.count == 2 && actualNbr.starts(with: "-")) {
             actualNbr = "0"
         }
         else {
@@ -66,6 +77,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onClearClicked(_ sender: UIButton) {
+        prevNbr = nil;
         actualNbr = "0";
         updateUI();
     }

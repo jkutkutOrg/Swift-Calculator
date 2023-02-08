@@ -7,6 +7,14 @@
 
 import UIKit
 
+extension UIButton {
+    open override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted ? .lightGray : .white
+        }
+    }
+}
+
 class ViewController: UIViewController {
     
     @IBOutlet weak var labelNbr: UITextField!
@@ -86,5 +94,31 @@ class ViewController: UIViewController {
         // TODO dot format?
         labelNbr.text = actualNbr;
     }
+    
+    // Animations
+    @IBAction func btnTapped(_ sender: UIButton) {
+        let brightness = 50.0;
+        
+        UIView.animate(withDuration: 0.15, animations: {
+            // sender.transform = CGAffineTransform(scaleX: 1.1, y: 1.1);
+            // sender.alpha = 0.8;
+            /*if let bgColorObj = sender.layer.backgroundColor {
+                let bgColor = bgColorObj.components!;
+                //let lighterColor = UIColor(hue: bgColor[0], saturation: bgColor[1], brightness: bgColor[2] + brightness, alpha: bgColor[3]);
+                let lighterColor = UIColor(red: bgColor[0] + brightness, green: bgColor[1] + brightness, blue: bgColor[2] + brightness, alpha: bgColor[3])
+                sender.layer.backgroundColor = lighterColor.cgColor;
+                sender.transform = CGAffineTransform(scaleX: 0, y: 0)
+            }*/
+            //sender.backgroundColor = .white
+            //sender.layer.backgroundColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
+            
+            
+        }) { (finished) in
+            UIView.animate(withDuration: 0.1, animations: {
+                //sender.backgroundColor = .clear
+            })
+        }
+    }
+    
 }
 

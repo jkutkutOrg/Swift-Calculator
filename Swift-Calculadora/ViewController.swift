@@ -9,6 +9,42 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    let INT_OPERATIONS: [String: (Int, Int) -> Int] = [
+        "%": { (_ a, _ b) in
+            return a % b;
+        },
+        "÷": { (_ a, _ b) in
+            return a / b;
+        },
+        "+": { (_ a, _ b) in
+            return a + b;
+        },
+        "-": { (_ a, _ b) in
+            return a - b;
+        },
+        "x": { (_ a, _ b) in
+            return a * b;
+        }
+    ];
+    
+    let DOUBLE_OPERATIONS: [String: (Double, Double) -> Double] = [
+        "%": { (_ a, _ b) in
+            return a.truncatingRemainder(dividingBy: b);
+        },
+        "÷": { (_ a, _ b) in
+            return a / b;
+        },
+        "+": { (_ a, _ b) in
+            return a + b;
+        },
+        "-": { (_ a, _ b) in
+            return a - b;
+        },
+        "x": { (_ a, _ b) in
+            return a * b;
+        }
+    ]
+    
     @IBOutlet weak var labelNbr: UITextField!
     var actualNbr: String = "0";
     var prevNbr: String? = nil;
@@ -25,6 +61,7 @@ class ViewController: UIViewController {
         let nbr: String? = sender.titleLabel?.text; // Not nil
         append(nbr!)
         updateUI();
+        // TODO remove selected operation (it will be the valid one)
     }
     
     @IBAction func onCommaClicked(_ sender: UIButton) {
@@ -79,6 +116,8 @@ class ViewController: UIViewController {
     @IBAction func onClearClicked(_ sender: UIButton) {
         prevNbr = nil;
         actualNbr = "0";
+        operationSelected = nil;
+        isOperationSelected = false; // TODO remove highlight of btn
         updateUI();
     }
     
@@ -86,5 +125,9 @@ class ViewController: UIViewController {
         // TODO dot format?
         labelNbr.text = actualNbr;
     }
-}
+    
+    // Operations
+    @IBAction func onEqClicked(_ sender: Any) {
+        operate()
+    }
 

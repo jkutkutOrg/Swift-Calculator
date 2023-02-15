@@ -40,6 +40,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
+    
+    @IBAction func onBtnClicked(_ sender: UIButton) {
+        sender.shine()
+    }
+    
 
 
     @IBAction func onNumberClicked(_ sender: UIButton) {
@@ -160,6 +165,8 @@ class ViewController: UIViewController {
             // TODO select the button
             isOperationSelected = true;
         }*/
+        
+        sender.select()
         
         operationSelected = op;
     }

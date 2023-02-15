@@ -13,6 +13,7 @@
 		AC220CA9298A72A2004E7381 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC220CA7298A72A2004E7381 /* Main.storyboard */; };
 		AC220CAB298A72A3004E7381 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC220CAA298A72A3004E7381 /* Assets.xcassets */; };
 		AC220CAE298A72A3004E7381 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC220CAC298A72A3004E7381 /* LaunchScreen.storyboard */; };
+		AC84BCB5299CE29C003DD321 /* UIButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC84BCB4299CE29C003DD321 /* UIButtonExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		AC220CAA298A72A3004E7381 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AC220CAD298A72A3004E7381 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AC220CAF298A72A3004E7381 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AC84BCB4299CE29C003DD321 /* UIButtonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				AC220CAA298A72A3004E7381 /* Assets.xcassets */,
 				AC220CAC298A72A3004E7381 /* LaunchScreen.storyboard */,
 				AC220CAF298A72A3004E7381 /* Info.plist */,
+				AC84BCB4299CE29C003DD321 /* UIButtonExtensions.swift */,
 			);
 			path = "Swift-Calculadora";
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC220CA6298A72A2004E7381 /* ViewController.swift in Sources */,
+				AC84BCB5299CE29C003DD321 /* UIButtonExtensions.swift in Sources */,
 				AC220CA2298A72A2004E7381 /* AppDelegate.swift in Sources */,
 				AC220CA4298A72A2004E7381 /* SceneDelegate.swift in Sources */,
 			);

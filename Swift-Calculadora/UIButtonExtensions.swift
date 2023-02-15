@@ -12,10 +12,10 @@ extension UIButton {
     
     func select() {
         self.configuration?.background.backgroundColor = .white;
-        self.configuration?.baseForegroundColor = .orange;
+        self.configuration?.baseForegroundColor = UIColor.systemOrange;
     }
     func unselect() {
-        self.configuration?.background.backgroundColor = .orange;
+        self.configuration?.background.backgroundColor = UIColor.systemOrange;
         self.configuration?.baseForegroundColor = .white;
     }
     
@@ -27,5 +27,9 @@ extension UIButton {
                 self.alpha = 1;
             })
         }
+    }
+    
+    func isSelected() -> Bool {
+        return self.configuration?.background.backgroundColor == .white;
     }
 }

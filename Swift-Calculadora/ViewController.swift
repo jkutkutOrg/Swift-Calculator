@@ -26,24 +26,58 @@ class ViewController: UIViewController {
         "x": { (_ a, _ b) in
             return a * b;
         }
-    ]
+    ];
+    private func strToDouble(_ str: String) -> Double {
+        /*let f = NumberFormatter();
+        f.groupingSeparator = ""
+        f.decimalSeparator = Locale.current.decimalSeparator;
+        f.numberStyle = .decimal
+        f.maximumIntegerDigits = 15;
+        f.minimumFractionDigits = 0
+        f.maximumFractionDigits = 15;
+        return f;
+    }();*/
+        let nbr = str.replacingOccurrences(of: ",", with: ".");
+        if let d: Double = Double(nbr) {
+            return d;
+        }
+        return Double.infinity;
+    }
+    private let doubleToStr: NumberFormatter = {
+        let f = NumberFormatter();
+        f.groupingSeparator = Locale.current.groupingSeparator;
+        f.decimalSeparator = ",";
+        f.numberStyle = .decimal;
+        f.maximumIntegerDigits = 10;
+        f.minimumFractionDigits = 0;
+        f.maximumFractionDigits = 9;
+        return f;
+    }();
+    private let doubleToScinetificStr: NumberFormatter = {
+        let f = NumberFormatter();
+        f.numberStyle = .scientific;
+        f.maximumFractionDigits = 3;
+        f.exponentSymbol = "e";
+        return f;
+    }();
+        
     
-    @IBOutlet weak var labelNbr: UITextField!
+    @IBOutlet weak var labelNbr: UITextField!;
     private var screenNbr: String = "0";
     private var total: Double? = nil; // Nil needed to handle Error
     private var operationSelected: UIButton? = nil;
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad();
     }
     
     @IBAction func onBtnClicked(_ sender: UIButton) {
-        sender.shine()
+        sender.shine();
     }
 
     @IBAction func onNumberClicked(_ sender: UIButton) {
         let nbr: String? = sender.titleLabel?.text; // Not nil
-        append(nbr!)
+        append(nbr!);
         updateUI();
     }
     
@@ -65,7 +99,11 @@ class ViewController: UIViewController {
     }
     
     func append(_ c: String) {
-        // If btn is active selected, set the total to current nbr?
+        if operationSelected != nil && operationSelected!.isSelected() {
+            // If btn is active selected, set the total to current nbr?
+            total = strToDouble(screenNbr);
+            screenNbr = "0";
+        }
         
         // Appends to the right the given character
         if screenNbr.count >= MAX_NBR_SIZE {
@@ -92,6 +130,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onDeleteClicked(_ sender: UIButton) {
+        if screenNbr == "inf" {
+            screenNbr = "1";
+        }
         if screenNbr.count == 1 || (screenNbr.count == 2 && screenNbr.starts(with: "-")) {
             screenNbr = "0"
         }
@@ -119,7 +160,13 @@ class ViewController: UIViewController {
         if operationSelected != nil {
             operationSelected?.unselect();
         }
-        labelNbr.text = screenNbr; // TODO dot format?
+        if ["Error", "-inf", "inf", "NaN", "+∞", "-∞"].contains(screenNbr) {
+            labelNbr.text = "Error"
+            screenNbr = "inf"
+        }
+        else {
+            labelNbr.text = screenNbr;
+        }
     }
     
     // Operations
@@ -142,7 +189,7 @@ class ViewController: UIViewController {
         let operation: String? = operationSelected!.titleLabel?.text; // Not nil
         
         let n1: Double;
-        let n2: Double = Double(screenNbr)!;
+        let n2: Double = strToDouble(screenNbr);
         if total == nil {
             n1 = n2;
         }
@@ -151,15 +198,24 @@ class ViewController: UIViewController {
         }
         
         let r = DOUBLE_OPERATIONS[operation!]!(n1, n2);
-        screenNbr = String(format: "%f", r);
+        let nbrObj = NSNumber(value: r);
+        var nbr: String = doubleToStr.string(from: nbrObj)!;
+        if nbr.count > MAX_NBR_SIZE {
+            nbr = doubleToScinetificStr.string(from: nbrObj)!;
+        }
         
+        screenNbr = nbr;
+        if operationSelected!.isSelected() {
+            operationSelected?.unselect();
+        }
+        operationSelected = nil;
         updateUI();
     }
     
     @IBAction func onOperationClicked(_ sender: UIButton) {
-        /*if operationSelected != nil && prevNbr != nil {
+        if operationSelected != nil && total != nil {
             operate();
-        }*/ // TODO restore
+        }
         
         if operationSelected != nil {
             operationSelected?.unselect()

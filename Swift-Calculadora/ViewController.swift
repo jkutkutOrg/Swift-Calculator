@@ -9,24 +9,6 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let INT_OPERATIONS: [String: (Int, Int) -> Int] = [
-        "%": { (_ a, _ b) in
-            return a % b;
-        },
-        "÷": { (_ a, _ b) in
-            return a / b;
-        },
-        "+": { (_ a, _ b) in
-            return a + b;
-        },
-        "-": { (_ a, _ b) in
-            return a - b;
-        },
-        "x": { (_ a, _ b) in
-            return a * b;
-        }
-    ];
-    
     let DOUBLE_OPERATIONS: [String: (Double, Double) -> Double] = [
         "%": { (_ a, _ b) in
             return a.truncatingRemainder(dividingBy: b);
@@ -46,10 +28,13 @@ class ViewController: UIViewController {
     ]
     
     @IBOutlet weak var labelNbr: UITextField!
-    var actualNbr: String = "0";
-    var prevNbr: String? = nil;
+    var screenNbr: String = "0";
+    var total: Double? = nil; // Nil needed to handle Error
     
-    let MAX_NBR_SIZE = 9;
+    // var isOperationSelected: Bool = false; // On screen
+    var operationSelected: String? = nil;
+    
+    let MAX_NBR_SIZE = 10;
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +46,6 @@ class ViewController: UIViewController {
         let nbr: String? = sender.titleLabel?.text; // Not nil
         append(nbr!)
         updateUI();
-        // TODO remove selected operation (it will be the valid one)
     }
     
     @IBAction func onCommaClicked(_ sender: UIButton) {
@@ -71,59 +55,61 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onSignClicked(_ sender: UIButton) {
-        let actualSign = String(actualNbr.prefix(1));
+        let actualSign = String(screenNbr.prefix(1));
         if actualSign == "-" {
-            actualNbr.removeFirst(1)
+            screenNbr.removeFirst(1)
         }
         else {
-            actualNbr = "-" + actualNbr
+            screenNbr = "-" + screenNbr
         }
         updateUI()
     }
     
     func append(_ c: String) {
         // Appends to the right the given character
-        if actualNbr.count >= MAX_NBR_SIZE {
+        if screenNbr.count >= MAX_NBR_SIZE {
             return
         }
-        if c == "," && actualNbr.contains(c) { // Check , already there
+        if c == "," && screenNbr.contains(c) { // Check , already there
             return
         }
         
-        if actualNbr == "0" {
+        if screenNbr == "0" {
             if c == "," {
-                actualNbr += c
+                screenNbr += c
             }
             else {
-                actualNbr = c
+                screenNbr = c
             }
         }
         else {
-            actualNbr += c
+            screenNbr += c
         }
     }
     
     @IBAction func onDeleteClicked(_ sender: UIButton) {
-        if actualNbr.count == 1 || (actualNbr.count == 2 && actualNbr.starts(with: "-")) {
-            actualNbr = "0"
+        // TODO check select operation and then delete
+        if screenNbr.count == 1 || (screenNbr.count == 2 && screenNbr.starts(with: "-")) {
+            screenNbr = "0"
         }
         else {
-            actualNbr.removeLast()
+            screenNbr.removeLast()
         }
         updateUI()
     }
     
     @IBAction func onClearClicked(_ sender: UIButton) {
-        prevNbr = nil;
-        actualNbr = "0";
+        total = nil;
+        screenNbr = "0";
+        
         operationSelected = nil;
-        isOperationSelected = false; // TODO remove highlight of btn
+        //isOperationSelected = false; // TODO remove highlight of btn
         updateUI();
     }
     
     func updateUI() {
-        // TODO dot format?
-        labelNbr.text = actualNbr;
+        // TODO remove selected operation (it will be the valid one)
+        labelNbr.text = screenNbr; // TODO dot format?
     }
     
     // Operations
@@ -131,3 +117,50 @@ class ViewController: UIViewController {
         operate()
     }
 
+    func operate() {
+        /*
+         Cases
+         - Prev is nil, operation is nil -> Do nothing
+         - Prev is nil, operation is not nil -> Do the operation with actual twice
+         - Prev is not nil, operation is nil -> ! not possible
+         - Prev is not nil, operation is not nil -> Operate normally
+         */
+        if operationSelected == nil {
+            return;
+        }
+        
+        /*if prevNbr == nil {
+            prevNbr = actualNbr;
+        }
+        else {
+            // TODO
+        }
+        
+        let n1: Double = Double(actualNbr)!;
+        let n2: Double = Double(prevNbr!)!;
+        
+        let r = DOUBLE_OPERATIONS[operationSelected!]!(n1, n2);
+        actualNbr = String(format: "%f", r);*/
+        
+        updateUI();
+    }
+    
+    @IBAction func onOperationClicked(_ sender: UIButton) {
+        let op: String? = sender.titleLabel?.text; // Not nil
+        
+        /*if operationSelected != nil && prevNbr != nil {
+            operate();
+        }*/ // TODO restore
+        
+        /*if isOperationSelected {
+            // TODO hide the selected
+            // TODO select the button
+        }
+        else {
+            // TODO select the button
+            isOperationSelected = true;
+        }*/
+        
+        operationSelected = op;
+    }
+}

@@ -2,13 +2,13 @@
 //  ViewController.swift
 //  Swift-Calculadora
 //
-//  Created by Usuario invitado on 1/2/23.
+//  Created by Jkutkut and Alexeses on 1/2/23.
 //
 
 import UIKit
 
 class ViewController: UIViewController {
-    
+
     private let MAX_NBR_SIZE = 10;
     private let DOUBLE_OPERATIONS: [String: (Double, Double) -> Double] = [
         "%": { (_ a, _ b) in
@@ -28,16 +28,7 @@ class ViewController: UIViewController {
         }
     ];
     private func strToDouble(_ str: String) -> Double {
-        /*let f = NumberFormatter();
-        f.groupingSeparator = ""
-        f.decimalSeparator = Locale.current.decimalSeparator;
-        f.numberStyle = .decimal
-        f.maximumIntegerDigits = 15;
-        f.minimumFractionDigits = 0
-        f.maximumFractionDigits = 15;
-        return f;
-    }();*/
-        let nbr = str.replacingOccurrences(of: ",", with: ".");
+       let nbr = str.replacingOccurrences(of: ",", with: ".");
         if let d: Double = Double(nbr) {
             return d;
         }
@@ -60,13 +51,12 @@ class ViewController: UIViewController {
         f.exponentSymbol = "e";
         return f;
     }();
-        
-    
+
     @IBOutlet weak var labelNbr: UITextField!;
     private var screenNbr: String = "0";
     private var total: Double? = nil; // Nil needed to handle Error
     private var operationSelected: UIButton? = nil;
-    
+
     override func viewDidLoad() {
         super.viewDidLoad();
     }

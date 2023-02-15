@@ -9,7 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let DOUBLE_OPERATIONS: [String: (Double, Double) -> Double] = [
+    private let MAX_NBR_SIZE = 10;
+    private let DOUBLE_OPERATIONS: [String: (Double, Double) -> Double] = [
         "%": { (_ a, _ b) in
             return a.truncatingRemainder(dividingBy: b);
         },
@@ -28,24 +29,17 @@ class ViewController: UIViewController {
     ]
     
     @IBOutlet weak var labelNbr: UITextField!
-    var screenNbr: String = "0";
-    var total: Double? = nil; // Nil needed to handle Error
+    private var screenNbr: String = "0";
+    private var total: Double? = nil; // Nil needed to handle Error
+    private var operationSelected: UIButton? = nil;
     
-    // var isOperationSelected: Bool = false; // On screen
-    var operationSelected: String? = nil;
-    
-    let MAX_NBR_SIZE = 10;
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func onBtnClicked(_ sender: UIButton) {
         sender.shine()
     }
-    
-
 
     @IBAction func onNumberClicked(_ sender: UIButton) {
         let nbr: String? = sender.titleLabel?.text; // Not nil
@@ -71,6 +65,8 @@ class ViewController: UIViewController {
     }
     
     func append(_ c: String) {
+        // If btn is active selected, set the total to current nbr?
+        
         // Appends to the right the given character
         if screenNbr.count >= MAX_NBR_SIZE {
             return
@@ -79,7 +75,10 @@ class ViewController: UIViewController {
             return
         }
         
-        if screenNbr == "0" {
+        if screenNbr == "-0" && c != "," {
+            screenNbr = "-" + c;
+        }
+        else if screenNbr == "0" {
             if c == "," {
                 screenNbr += c
             }
@@ -93,27 +92,33 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onDeleteClicked(_ sender: UIButton) {
-        // TODO check select operation and then delete
         if screenNbr.count == 1 || (screenNbr.count == 2 && screenNbr.starts(with: "-")) {
             screenNbr = "0"
         }
         else {
             screenNbr.removeLast()
         }
+        if operationSelected != nil {
+            operationSelected?.unselect()
+        }
+        operationSelected = nil;
         updateUI()
     }
     
     @IBAction func onClearClicked(_ sender: UIButton) {
         total = nil;
         screenNbr = "0";
-        
+        if operationSelected != nil {
+            operationSelected?.unselect()
+        }
         operationSelected = nil;
-        //isOperationSelected = false; // TODO remove highlight of btn
         updateUI();
     }
     
     func updateUI() {
-        // TODO remove selected operation (it will be the valid one)
+        if operationSelected != nil {
+            operationSelected?.unselect();
+        }
         labelNbr.text = screenNbr; // TODO dot format?
     }
     
@@ -134,40 +139,33 @@ class ViewController: UIViewController {
             return;
         }
         
-        /*if prevNbr == nil {
-            prevNbr = actualNbr;
+        let operation: String? = operationSelected!.titleLabel?.text; // Not nil
+        
+        let n1: Double;
+        let n2: Double = Double(screenNbr)!;
+        if total == nil {
+            n1 = n2;
         }
         else {
-            // TODO
+            n1 = total!;
         }
         
-        let n1: Double = Double(actualNbr)!;
-        let n2: Double = Double(prevNbr!)!;
-        
-        let r = DOUBLE_OPERATIONS[operationSelected!]!(n1, n2);
-        actualNbr = String(format: "%f", r);*/
+        let r = DOUBLE_OPERATIONS[operation!]!(n1, n2);
+        screenNbr = String(format: "%f", r);
         
         updateUI();
     }
     
     @IBAction func onOperationClicked(_ sender: UIButton) {
-        let op: String? = sender.titleLabel?.text; // Not nil
-        
         /*if operationSelected != nil && prevNbr != nil {
             operate();
         }*/ // TODO restore
         
-        /*if isOperationSelected {
-            // TODO hide the selected
-            // TODO select the button
+        if operationSelected != nil {
+            operationSelected?.unselect()
         }
-        else {
-            // TODO select the button
-            isOperationSelected = true;
-        }*/
-        
         sender.select()
-        
-        operationSelected = op;
+
+        operationSelected = sender;
     }
 }
